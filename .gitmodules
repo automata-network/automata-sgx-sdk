@@ -1,0 +1,3 @@
+[submodule "incubator-teaclave-sgx-sdk"]
+	path = incubator-teaclave-sgx-sdk
+	url = https://github.com/automata-network/incubator-teaclave-sgx-sdk.git

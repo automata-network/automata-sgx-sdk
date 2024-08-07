@@ -1,0 +1,53 @@
+[package]
+name = "automata-sgx-builder"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+builder = ["dep:cc"]
+sgx_libc = ["dep:sgx_libc"]
+sgx_types = ["dep:sgx_types"]
+sgx_urts = ["dep:sgx_urts"]
+sgx_alloc = ["dep:sgx_alloc"]
+sgx_crypto = ["dep:sgx_crypto"]
+sgx_dcap_ra_msg = ["dep:sgx_dcap_ra_msg"]
+sgx_dcap_tkey_exchange = ["dep:sgx_dcap_tkey_exchange"]
+sgx_dcap_tvl = ["dep:sgx_dcap_tvl"]
+sgx_demangle = ["dep:sgx_demangle"]
+sgx_edl = ["dep:sgx_edl"]
+sgx_ffi = ["dep:sgx_ffi"]
+sgx_ukey_exchange = ["dep:sgx_ukey_exchange"]
+sgx_tkey_exchange = ["dep:sgx_tkey_exchange"]
+sgx_ra_msg = ["dep:sgx_ra_msg"]
+sgx_no_tstd = ["dep:sgx_no_tstd"]
+sgx_rand = ["dep:sgx_rand"]
+sgx_trts = ["dep:sgx_trts"]
+
+[dependencies]
+cc = { version = "1.1.5", optional = true }
+sgx_libc = { path = "incubator-teaclave-sgx-sdk/sgx_libc", optional = true }
+sgx_types = { path = "incubator-teaclave-sgx-sdk/sgx_types", optional = true }
+sgx_urts = { path = "incubator-teaclave-sgx-sdk/sgx_urts", optional = true }
+
+sgx_alloc = { path = "incubator-teaclave-sgx-sdk/sgx_alloc", optional = true }
+sgx_crypto = { path = "incubator-teaclave-sgx-sdk/sgx_crypto", optional = true }
+sgx_dcap_ra_msg = { path = "incubator-teaclave-sgx-sdk/sgx_dcap/message", optional = true }
+sgx_dcap_tkey_exchange = { path = "incubator-teaclave-sgx-sdk/sgx_dcap/tkey_exchange", optional = true }
+sgx_dcap_tvl = { path = "incubator-teaclave-sgx-sdk/sgx_dcap/tvl", optional = true }
+sgx_demangle = { path = "incubator-teaclave-sgx-sdk/sgx_demangle", optional = true }
+sgx_edl = { path = "incubator-teaclave-sgx-sdk/sgx_edl", optional = true }
+sgx_ffi = { path = "incubator-teaclave-sgx-sdk/sgx_ffi", optional = true }
+sgx_ukey_exchange = { path = "incubator-teaclave-sgx-sdk/sgx_key_exchange/ukey_exchange", optional = true }
+sgx_tkey_exchange = { path = "incubator-teaclave-sgx-sdk/sgx_key_exchange/tkey_exchange", optional = true }
+sgx_ra_msg = { path = "incubator-teaclave-sgx-sdk/sgx_key_exchange/message", optional = true }
+sgx_no_tstd = { path = "incubator-teaclave-sgx-sdk/sgx_no_tstd", optional = true }
+sgx_rand = { path = "incubator-teaclave-sgx-sdk/sgx_rand", optional = true }
+sgx_trts = { path = "incubator-teaclave-sgx-sdk/sgx_trts", optional = true }
+
+[workspace]
+resolver = "2"
+members = [
+    "incubator-teaclave-sgx-sdk/rustlib/std",
+]
