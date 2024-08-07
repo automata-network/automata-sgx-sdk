@@ -10,6 +10,12 @@ fn main() {
         "cargo:rustc-env=TEACLAVE_SGX_SDK_ROOT_DIR={}",
         sdk_path.display()
     );
+    std::fs::write(
+        PathBuf::new()
+            .join(std::env::var("OUT_DIR").unwrap())
+            .join("TEACLAVE_SGX_SDK_ROOT_DIR"),
+        sdk_path.to_str().unwrap(),
+    ).unwrap();
 
     let rust_target_path = sdk_path.join("rustlib");
     let sgx_target = "x86_64-unknown-linux-sgx";
