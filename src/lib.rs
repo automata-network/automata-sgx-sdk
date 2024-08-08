@@ -40,6 +40,7 @@ pub fn build_enclave_objs() {
     let proxy_trusted_dir = out_dir.join("proxy_trusted");
     let proxy_untrusted_dir = out_dir.join("proxy_untrusted");
     for enclave in &cargo_sgx_output.metadata {
+        mode.trace_file(&enclave.enclave_archive);
         let edl_name = enclave.edl.file_stem().unwrap().to_str().unwrap();
         let enclave_name = enclave
             .enclave_archive
