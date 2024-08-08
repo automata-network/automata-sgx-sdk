@@ -21,8 +21,12 @@ pub struct CargoSgxOutputMetadata {
 
 impl Env {
     // run in cargo-sgx
-    pub fn cargo_sgx_output() -> CargoSgxOutput {
-        serde_json::from_str(&must_get_env("CARGO_SGX_OUTPUT")).unwrap()
+    pub fn cargo_sgx_output() -> Option<CargoSgxOutput> {
+        let data = get_env("CARGO_SGX_OUTPUT", "");
+        if data.is_empty() {
+            return None;
+        }
+        serde_json::from_str(&data).unwrap()
     }
 
     pub fn sgx_metadata_lds() -> PathBuf {

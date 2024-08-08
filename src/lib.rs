@@ -12,15 +12,41 @@ pub use env::*;
 
 #[cfg(feature = "builder")]
 pub fn build_app() {
+    build_enclave_objs();
+    println!(
+        "cargo:rustc-link-search=native={}",
+        Env::sgx_lib_path().display()
+    );
+    match Env::sgx_mode().as_str() {
+        "SIM" | "SW" => println!("cargo:rustc-link-lib=dylib=sgx_urts_sim"),
+        "HYPER" => println!("cargo:rustc-link-lib=dylib=sgx_urts_hyper"),
+        "HW" => println!("cargo:rustc-link-lib=dylib=sgx_urts"),
+        _ => println!("cargo:rustc-link-lib=dylib=sgx_urts"),
+    }
+}
+
+#[cfg(feature = "builder")]
+pub fn build_enclave_objs() {
+    let pkg_name = std::env::var("CARGO_PKG_NAME").unwrap();
+    let cargo_sgx_output = match Env::cargo_sgx_output() {
+        Some(n) => n,
+        None => {
+            println!("cargo:warning={} is intended to build from `cargo sgx build`, please try install it by `cargo install cargo-sgx`", pkg_name);
+            return;
+        }
+    };
     let mode = BuildMode::BuildScript;
     let out_dir = Env::out_dir();
     let proxy_trusted_dir = out_dir.join("proxy_trusted");
     let proxy_untrusted_dir = out_dir.join("proxy_untrusted");
-
-    let cargo_sgx_output = Env::cargo_sgx_output();
     for enclave in &cargo_sgx_output.metadata {
         let edl_name = enclave.edl.file_stem().unwrap().to_str().unwrap();
-        let enclave_name = enclave.enclave_archive.file_stem().unwrap().to_str().unwrap();
+        let enclave_name = enclave
+            .enclave_archive
+            .file_stem()
+            .unwrap()
+            .to_str()
+            .unwrap();
         let proxy_trusted_source = Edger8r::new(mode).build(&enclave.edl, true, &proxy_trusted_dir);
         let proxy_untrusted_source =
             Edger8r::new(mode).build(&enclave.edl, false, &proxy_untrusted_dir);
@@ -45,16 +71,5 @@ pub fn build_app() {
             &out_dir.join(format!("{}.so", enclave_name)),
             &enclave.key,
         );
-    }
-
-    println!(
-        "cargo:rustc-link-search=native={}",
-        Env::sgx_lib_path().display()
-    );
-    match Env::sgx_mode().as_str() {
-        "SIM" | "SW" => println!("cargo:rustc-link-lib=dylib=sgx_urts_sim"),
-        "HYPER" => println!("cargo:rustc-link-lib=dylib=sgx_urts_hyper"),
-        "HW" => println!("cargo:rustc-link-lib=dylib=sgx_urts"),
-        _ => println!("cargo:rustc-link-lib=dylib=sgx_urts"),
     }
 }

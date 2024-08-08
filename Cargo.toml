@@ -2,14 +2,14 @@
 name = "automata-sgx-builder"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Automata Team"]
+homepage = "https://www.ata.network/"
 
 [features]
 builder = []
 sysroot = []
 sgx_libc = ["dep:sgx_libc"]
-sgx_types = ["dep:sgx_types"]
+sgx_types = []
 sgx_urts = ["dep:sgx_urts"]
 sgx_alloc = ["dep:sgx_alloc"]
 sgx_crypto = ["dep:sgx_crypto"]
@@ -32,27 +32,26 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 automata-sgx-builder-sysroot = { path = "sysroot" }
 
-sgx_libc = { path = "incubator-teaclave-sgx-sdk/sgx_libc", optional = true }
-sgx_types = { path = "incubator-teaclave-sgx-sdk/sgx_types", optional = true }
-sgx_urts = { path = "incubator-teaclave-sgx-sdk/sgx_urts", optional = true }
-sgx_alloc = { path = "incubator-teaclave-sgx-sdk/sgx_alloc", optional = true }
-sgx_crypto = { path = "incubator-teaclave-sgx-sdk/sgx_crypto", optional = true }
-sgx_dcap_ra_msg = { path = "incubator-teaclave-sgx-sdk/sgx_dcap/message", optional = true }
-sgx_dcap_tkey_exchange = { path = "incubator-teaclave-sgx-sdk/sgx_dcap/tkey_exchange", optional = true }
-sgx_dcap_tvl = { path = "incubator-teaclave-sgx-sdk/sgx_dcap/tvl", optional = true }
-sgx_demangle = { path = "incubator-teaclave-sgx-sdk/sgx_demangle", optional = true }
-sgx_edl = { path = "incubator-teaclave-sgx-sdk/sgx_edl", optional = true }
-sgx_ffi = { path = "incubator-teaclave-sgx-sdk/sgx_ffi", optional = true }
-sgx_ukey_exchange = { path = "incubator-teaclave-sgx-sdk/sgx_key_exchange/ukey_exchange", optional = true }
-sgx_tkey_exchange = { path = "incubator-teaclave-sgx-sdk/sgx_key_exchange/tkey_exchange", optional = true }
-sgx_ra_msg = { path = "incubator-teaclave-sgx-sdk/sgx_key_exchange/message", optional = true }
-sgx_no_tstd = { path = "incubator-teaclave-sgx-sdk/sgx_no_tstd", optional = true }
-sgx_rand = { path = "incubator-teaclave-sgx-sdk/sgx_rand", optional = true }
-sgx_trts = { path = "incubator-teaclave-sgx-sdk/sgx_trts", optional = true }
+sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08" }
+sgx_libc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_alloc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_crypto = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_dcap_ra_msg = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_dcap_tkey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_dcap_tvl = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_demangle = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_edl = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_ffi = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_ukey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_tkey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_ra_msg = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_no_tstd = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_rand = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
+sgx_trts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-preview-08-08", optional = true }
 
 [workspace]
 resolver = "2"
 members = [
-    "incubator-teaclave-sgx-sdk/rustlib/std",
     "sysroot",
 ]
