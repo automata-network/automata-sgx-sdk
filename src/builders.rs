@@ -64,7 +64,7 @@ impl UntrustedProxyBuilder {
         build.includes(includes);
         build.out_dir(parent_path(output));
         build.file(source).compile(&link_name(output));
-        self.mode.trace_file(source);
+        // self.mode.trace_file(source);
     }
 }
 
@@ -98,7 +98,7 @@ impl TrustedProxyBuilder {
         cmd.args(["-c", &format!("{}", source.display())]);
         cmd.args(["-o", &format!("{}", output.display())]);
         assert!(cmd.status().unwrap().success());
-        self.mode.trace_file(source);
+        // self.mode.trace_file(source);
     }
 }
 
@@ -118,8 +118,8 @@ impl EnclaveSharedObjectBuilder {
         lds: &PathBuf,
         output: &PathBuf,
     ) {
-        self.mode.trace_file(trusted_proxy);
-        self.mode.trace_file(enclave_object);
+        // self.mode.trace_file(trusted_proxy);
+        // self.mode.trace_file(enclave_object);
         self.mode.trace_file(lds);
 
         let mut build = cc::Build::new();
@@ -284,7 +284,7 @@ impl SgxSigner {
 
     pub fn sign(&self, cfg: &PathBuf, out: &PathBuf, enclave: &PathBuf, pem: &PathBuf) {
         self.mode.trace_file(cfg);
-        self.mode.trace_file(enclave);
+        // self.mode.trace_file(enclave);
         self.mode.trace_file(pem);
 
         let mut cmd = Command::new(&self.bin);

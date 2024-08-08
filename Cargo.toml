@@ -7,6 +7,7 @@ edition = "2021"
 
 [features]
 builder = []
+sysroot = []
 sgx_libc = ["dep:sgx_libc"]
 sgx_types = ["dep:sgx_types"]
 sgx_urts = ["dep:sgx_urts"]
@@ -29,10 +30,11 @@ sgx_trts = ["dep:sgx_trts"]
 cc = { version = "1.1.5" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+automata-sgx-builder-sysroot = { path = "sysroot" }
+
 sgx_libc = { path = "incubator-teaclave-sgx-sdk/sgx_libc", optional = true }
 sgx_types = { path = "incubator-teaclave-sgx-sdk/sgx_types", optional = true }
 sgx_urts = { path = "incubator-teaclave-sgx-sdk/sgx_urts", optional = true }
-
 sgx_alloc = { path = "incubator-teaclave-sgx-sdk/sgx_alloc", optional = true }
 sgx_crypto = { path = "incubator-teaclave-sgx-sdk/sgx_crypto", optional = true }
 sgx_dcap_ra_msg = { path = "incubator-teaclave-sgx-sdk/sgx_dcap/message", optional = true }
@@ -52,4 +54,5 @@ sgx_trts = { path = "incubator-teaclave-sgx-sdk/sgx_trts", optional = true }
 resolver = "2"
 members = [
     "incubator-teaclave-sgx-sdk/rustlib/std",
+    "sysroot",
 ]
