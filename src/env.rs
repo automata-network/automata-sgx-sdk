@@ -1,11 +1,28 @@
 use std::path::PathBuf;
+use serde::{Serialize, Deserialize};
 
 pub struct Env {}
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CargoSgxOutput {
+    pub version: String,
+    pub metadata: Vec<CargoSgxOutputMetadata>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CargoSgxOutputMetadata {
+    pub edl: PathBuf,
+    pub lds: PathBuf,
+    pub key: PathBuf,
+    pub config: PathBuf,
+    pub enclave_archive: PathBuf,
+    pub output_signed_so: PathBuf,
+}
+
 impl Env {
     // run in cargo-sgx
-    pub fn sgx_metadata_edl() -> PathBuf {
-        PathBuf::new().join(must_get_env("SGX_METADATA_EDL"))
+    pub fn cargo_sgx_output() -> CargoSgxOutput {
+        serde_json::from_str(&must_get_env("CARGO_SGX_OUTPUT")).unwrap()
     }
 
     pub fn sgx_metadata_lds() -> PathBuf {

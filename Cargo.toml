@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-builder = ["dep:cc"]
+builder = []
 sgx_libc = ["dep:sgx_libc"]
 sgx_types = ["dep:sgx_types"]
 sgx_urts = ["dep:sgx_urts"]
@@ -26,7 +26,9 @@ sgx_rand = ["dep:sgx_rand"]
 sgx_trts = ["dep:sgx_trts"]
 
 [dependencies]
-cc = { version = "1.1.5", optional = true }
+cc = { version = "1.1.5" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 sgx_libc = { path = "incubator-teaclave-sgx-sdk/sgx_libc", optional = true }
 sgx_types = { path = "incubator-teaclave-sgx-sdk/sgx_types", optional = true }
 sgx_urts = { path = "incubator-teaclave-sgx-sdk/sgx_urts", optional = true }
