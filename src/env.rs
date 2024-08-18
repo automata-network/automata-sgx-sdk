@@ -29,24 +29,8 @@ impl Env {
         serde_json::from_str(&data).unwrap()
     }
 
-    pub fn sgx_metadata_lds() -> PathBuf {
-        PathBuf::new().join(must_get_env("SGX_METADATA_LDS"))
-    }
-
-    pub fn sgx_metadata_key() -> PathBuf {
-        PathBuf::new().join(must_get_env("SGX_METADATA_KEY"))
-    }
-
-    pub fn sgx_metadata_config() -> PathBuf {
-        PathBuf::new().join(must_get_env("SGX_METADATA_CONFIG"))
-    }
-
-    pub fn sgx_metadata_enclave() -> PathBuf {
-        PathBuf::new().join(must_get_env("SGX_METADATA_ENCLAVE"))
-    }
-
-    pub fn sgx_metadata_output() -> PathBuf {
-        PathBuf::new().join(must_get_env("SGX_METADATA_OUTPUT"))
+    pub fn sgx_builder_path() -> PathBuf {
+        PathBuf::new().join(env!("AUTOMATA_SGX_BUILDER_DIR"))
     }
 
     pub fn is_64bits() -> bool {
@@ -119,6 +103,7 @@ impl Env {
     }
 }
 
+#[allow(dead_code)]
 pub(crate) fn must_get_env(key: &str) -> String {
     println!("cargo:rerun-if-env-changed={}", key);
     match std::env::var(key) {

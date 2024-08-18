@@ -1,0 +1,9 @@
+enclave {
+    include "sgx_dcap_key_exchange.h"
+    include "sgx_ql_lib_common.h"
+
+    untrusted {
+       quote3_error_t dcap_get_target([out] sgx_target_info_t *target);
+       quote3_error_t dcap_get_quote([in] sgx_report_t *report, size_t out_size, [out, size=25600] uint8_t *msg_out, [out] size_t *filled);
+    };
+};

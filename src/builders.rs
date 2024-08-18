@@ -142,8 +142,11 @@ impl EnclaveSharedObjectBuilder {
             "-Wl,--start-group",
             &format!("-L{}", parent_path(enclave_object)),
             &format!("-l{}", link_name(enclave_object)),
+            // &format!("-L/usr/lib/x86_64-linux-gnu"),
+            //  "-lssl", "-lcrypto",
             "-Wl,--end-group",
         ]);
+
         println!("cmd: {:?}", cmd);
         assert!(cmd.status().unwrap().success());
     }
@@ -178,6 +181,7 @@ impl Edger8r {
         let bin = Env::sgx_bin_path().join("sgx_edger8r");
         let search_path = vec![
             Env::custom_edl_path(),
+            Env::sgx_builder_path().join("edl"),
             Env::custom_common_path().join("inc"),
         ];
 

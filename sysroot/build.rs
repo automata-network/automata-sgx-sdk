@@ -36,7 +36,7 @@ fn main() {
         "build-std=core,alloc",
         "--release",
         "--features",
-        "env,net,thread,untrusted_time,untrusted_fs,unsupported_process,capi",
+        "env,net,thread,untrusted_time,untrusted_fs,unsupported_process,capi,backtrace",
     ]);
     cmd.arg("--target");
     cmd.arg(format!("{}", target.display()));

@@ -1,6 +1,19 @@
+#![cfg_attr(target_vendor = "teaclave", feature(rustc_private))]
+#![feature(panic_unwind)]
+
 pub mod sgxlib;
 
 pub mod cutils;
+
+pub mod types;
+
+mod patch;
+
+#[cfg(feature = "app")]
+pub mod app;
+
+#[cfg(feature = "dcap")]
+pub mod dcap;
 
 #[cfg(feature = "builder")]
 mod builders;
@@ -48,6 +61,10 @@ pub fn build_enclave_objs() {
             .unwrap()
             .to_str()
             .unwrap();
+        println!(
+            "cargo:rustc-env=ENCLAVE_{}=1",
+            snake_to_camel(enclave_name.trim_start_matches("lib"))
+        );
         let proxy_trusted_source = Edger8r::new(mode).build(&enclave.edl, true, &proxy_trusted_dir);
         let proxy_untrusted_source =
             Edger8r::new(mode).build(&enclave.edl, false, &proxy_untrusted_dir);
@@ -73,4 +90,25 @@ pub fn build_enclave_objs() {
             &enclave.key,
         );
     }
+}
+
+#[cfg(feature = "builder")]
+fn snake_to_camel(snake: &str) -> String {
+    let mut camel = String::new();
+    let mut upper_next = true;
+
+    for c in snake.chars() {
+        if c == '_' {
+            upper_next = true;
+        } else {
+            if upper_next {
+                camel.push(c.to_ascii_uppercase());
+                upper_next = false;
+            } else {
+                camel.push(c);
+            }
+        }
+    }
+
+    camel
 }

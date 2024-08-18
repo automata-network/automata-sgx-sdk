@@ -1,8 +1,12 @@
-#[cfg(feature = "sgx_libc")]
-pub use sgx_libc;
+
+#[cfg(all(feature = "sgx_trts", target_vendor = "teaclave"))]
+pub extern crate sgx_trts;
 
 #[cfg(feature = "sgx_types")]
-pub use sgx_types;
+pub extern crate sgx_types;
+
+#[cfg(feature = "sgx_libc")]
+pub extern crate sgx_libc;
 
 #[cfg(feature = "sgx_urts")]
 pub use sgx_urts;
@@ -49,7 +53,8 @@ pub use sgx_no_tstd;
 #[cfg(feature = "sgx_rand")]
 pub use sgx_rand;
 
-#[cfg(feature = "sgx_trts")]
-pub use sgx_trts;
+#[cfg(all(feature = "sgx_tse", target_vendor = "teaclave"))]
+pub extern crate sgx_tse;
 
-
+#[cfg(feature = "sgx_unwind")]
+pub use sgx_unwind;
