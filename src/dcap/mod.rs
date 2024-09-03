@@ -8,9 +8,7 @@ mod trusted;
 #[cfg(all(feature = "dcap", target_vendor = "teaclave"))]
 pub use trusted::*;
 
-pub use sgx_dcap_ql_rs::{quote3_error_t, sgx_qe_get_target_info, sgx_report_t, sgx_target_info_t};
-
-pub type Result<T> = core::result::Result<T, quote3_error_t>;
+pub type Result<T> = core::result::Result<T, String>;
 
 #[cfg(all(feature = "dcap", target_vendor = "teaclave"))]
 mod api {
@@ -25,13 +23,13 @@ mod api {
     }
 }
 
-#[cfg(all(feature = "dcap", not(target_vendor = "teaclave")))]
+#[cfg(any(not(feature = "dcap"), all(feature = "dcap", not(target_vendor = "teaclave"))))]
 mod api {
     // untrusted
     use super::*;
     
     pub fn dcap_quote(_data: [u8; 64]) -> Result<Vec<u8>> {
-        panic!("unable to generate DCAP quote in untrusted env");
+        Err("unable to generate DCAP quote in untrusted env".into())
     }
 }
 

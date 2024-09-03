@@ -23,7 +23,7 @@ impl Dcap {
         if ret == quote3_error_t::SGX_QL_SUCCESS {
             Ok(target)
         } else {
-            Err(ret)
+            Err(format!("quote error: {:?}", ret as u32))
         }
     }
 
@@ -46,7 +46,7 @@ impl Dcap {
             out.truncate(filled);
             Ok(out)
         } else {
-            Err(ret)
+            Err(format!("quote error: {:?}", ret as u32))
         }
     }
 }
