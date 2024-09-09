@@ -70,10 +70,6 @@ pub fn build_app() {
                     .trim_start_matches("lib");
 
                 println!(
-                    "cargo:warning={}",
-                    search_path.join(format!("lib{}.a", enclave_name)).display()
-                );
-                println!(
                     "cargo:rerun-if-changed={}",
                     search_path.join(format!("lib{}.a", enclave_name)).display()
                 );
@@ -82,7 +78,7 @@ pub fn build_app() {
         }
         None => {
             println!(
-                "cargo:warning={} is intended to build from `cargo sgx build`, now will goto compatibility mode (rebuild everytime)",
+                "cargo:warning={} is intended to build from `cargo sgx build`, please try install it by `cargo install cargo-sgx`, now will goto compatibility mode (rebuild everytime)",
                 pkg_name
             );
             // println!("cargo:rerun-if-env-changed=CARGO_BUILD");
