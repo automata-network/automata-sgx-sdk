@@ -37,6 +37,12 @@ pub fn build_app() {
     }
 }
 
+#[cfg(all(feature = "builder"))]
+pub fn enalbe_compatibility_mode() {
+    #[cfg(not(feature = "tstd_app"))]
+    std::env::set_var("CARGO_BUILD", "1")
+}
+
 #[cfg(all(feature = "builder", not(feature = "tstd_app")))]
 pub fn build_app() {
     use std::{os::unix::fs::symlink, process::Command};
@@ -63,11 +69,28 @@ pub fn build_app() {
                     .unwrap()
                     .trim_start_matches("lib");
 
+                println!(
+                    "cargo:warning={}",
+                    search_path.join(format!("lib{}.a", enclave_name)).display()
+                );
+                println!(
+                    "cargo:rerun-if-changed={}",
+                    search_path.join(format!("lib{}.a", enclave_name)).display()
+                );
                 println!("cargo:rustc-link-lib={}", enclave_name);
             }
         }
         None => {
-            println!("cargo:warning={} is intended to build from `cargo sgx build`, now will go into compatibility mode", pkg_name);
+            println!(
+                "cargo:warning={} is intended to build from `cargo sgx build`, now will goto compatibility mode (rebuild everytime)",
+                pkg_name
+            );
+            // println!("cargo:rerun-if-env-changed=CARGO_BUILD");
+            // if std::env::var("CARGO_BUILD") != Ok("1".to_owned()) {
+            //     let note = ["set CARGO_BUILD=1 to enable compatibility mode.", "or you can add automata_sgx_builder::enalbe_compatibility_mode(); to the build script."];
+            //     println!("cargo:warning=NOTICE:\n\nset CARGO_BUILD=1 to enable compatibility mode. \n\n\n", "=".repeat(80));
+            // }
+            println!("cargo:rerun-if-changed=compatibility mode");
 
             let profile = std::env::var("PROFILE").unwrap();
             let origin_target_dir = search_path.parent().unwrap();
