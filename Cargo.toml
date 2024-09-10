@@ -12,8 +12,8 @@ target = "x86_64-automata-linux-sgx"
 [features]
 default = ["sgx_types"]
 tstd_enclave = ["dcap", "sgx_trts", "sgx_types", "sgx_libc_pthread", "patch_rand", "patch_assert_fail"]
-tstd_app = ["dcap", "sgx_types", "sgx_urts"]
-builder = []
+tstd_app = ["dcap", "sgx_types", "sgx_urts", "app"]
+builder = ["dep:automata-build-script"]
 sysroot = []
 dcap = ["dep:sgx-dcap-ql-rs"]
 app = []
@@ -47,10 +47,11 @@ cc = { version = "1.1.5" }
 serde = { version = "=1.0.197", features = ["derive"] }
 serde_json = "1"
 automata-sgx-builder-sysroot = { path = "sysroot" }
+automata-build-script = { path = "build-script", optional = true }
 
 #sgx_no_tstd = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
 sgx_libc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
-# sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
+sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
 sgx_alloc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
 sgx_crypto = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
 sgx_dcap_ra_msg = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
@@ -66,11 +67,9 @@ sgx_rand = { git = "https://github.com/automata-network/incubator-teaclave-sgx-s
 sgx_unwind = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
 
 sgx-dcap-ql-rs = { git = "https://github.com/automata-network/SGXDataCenterAttestationPrimitives.git", branch = "automata_sgx_builder", optional = true }
-toml = "0.8.19"
+
 ctor = "0.2"
 
-[target.'cfg(all(target_os = "linux"))'.dependencies]
-sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
 
 [target.'cfg(not(target_vendor = "teaclave"))'.dependencies]
 sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
@@ -81,4 +80,5 @@ sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-
 resolver = "2"
 members = [
     "sysroot",
+    "build-script"
 ]

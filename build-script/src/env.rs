@@ -7,6 +7,7 @@ pub struct Env {}
 pub struct CargoSgxOutput {
     pub version: String,
     pub metadata: Vec<CargoSgxOutputMetadata>,
+    pub std_mode: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
