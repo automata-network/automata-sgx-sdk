@@ -43,7 +43,7 @@ sgx_unwind = ["dep:sgx_unwind"]
 
 [dependencies]
 cc = { version = "1.1.5" }
-serde = { version = "1", features = ["derive"] }
+serde = { version = "=1.0.197", features = ["derive"] }
 serde_json = "1"
 automata-sgx-builder-sysroot = { path = "sysroot" }
 
