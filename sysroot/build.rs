@@ -1,6 +1,11 @@
 include!("../build_dep.rs");
 
 fn main() {
+    #[cfg(not(target_vendor = "teaclave"))]
+    build_sysroot();
+}
+
+fn build_sysroot() {
     let sgx_target = "x86_64-automata-linux-sgx";
 
     let out_dir = PathBuf::new().join(std::env::var("OUT_DIR").unwrap());
