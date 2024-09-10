@@ -1,7 +1,7 @@
 include!("../build_dep.rs");
 
 fn main() {
-    let sgx_target = "x86_64-unknown-linux-sgx";
+    let sgx_target = "x86_64-automata-linux-sgx";
 
     let out_dir = PathBuf::new().join(std::env::var("OUT_DIR").unwrap());
     if out_dir.as_os_str().to_str().unwrap().contains(sgx_target) {

@@ -80,7 +80,7 @@ impl Env {
     }
 
     pub fn sgx_target_name() -> String {
-        "x86_64-unknown-linux-sgx".into()
+        "x86_64-automata-linux-sgx".into()
     }
 
     pub fn sgx_target_json() -> PathBuf {
