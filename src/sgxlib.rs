@@ -8,7 +8,7 @@ pub extern crate sgx_types;
 #[cfg(feature = "sgx_libc")]
 pub extern crate sgx_libc;
 
-#[cfg(all(feature = "app", not(target_vendor = "teaclave")))]
+#[cfg(all(feature = "sgx_urts", not(target_vendor = "teaclave")))]
 pub use sgx_urts;
 
 #[cfg(feature = "sgx_alloc")]
