@@ -14,9 +14,9 @@ pub mod app;
 
 pub mod dcap;
 
-#[cfg(feature = "builder")]
+#[cfg(not(target_vendor = "teaclave"))]
 mod builders;
-#[cfg(feature = "builder")]
+#[cfg(not(target_vendor = "teaclave"))]
 pub use builders::*;
 
 mod env;
@@ -24,7 +24,7 @@ pub use env::*;
 
 pub use ctor::ctor;
 
-#[cfg(all(feature = "builder", feature = "tstd_app"))]
+#[cfg(all(not(target_vendor = "teaclave"), feature = "tstd_app"))]
 pub fn build_app() {
     build_enclave_objs();
     println!(
@@ -39,13 +39,13 @@ pub fn build_app() {
     }
 }
 
-#[cfg(all(feature = "builder"))]
+#[cfg(not(target_vendor = "teaclave"))]
 pub fn enalbe_compatibility_mode() {
     #[cfg(not(feature = "tstd_app"))]
     std::env::set_var("CARGO_BUILD", "1")
 }
 
-#[cfg(all(feature = "builder", not(feature = "tstd_app")))]
+#[cfg(all(not(target_vendor = "teaclave"), not(feature = "tstd_app")))]
 pub fn build_app() {
     use std::{os::unix::fs::symlink, process::Command};
 
@@ -124,7 +124,7 @@ pub fn build_app() {
     };
 }
 
-#[cfg(feature = "builder")]
+#[cfg(not(target_vendor = "teaclave"))]
 pub fn get_metadata_pkgs() -> Vec<(String, String)> {
     use std::path::PathBuf;
     let cwd = std::env::current_dir().unwrap();
@@ -155,7 +155,7 @@ pub fn get_metadata_pkgs() -> Vec<(String, String)> {
     Vec::new()
 }
 
-#[cfg(feature = "builder")]
+#[cfg(not(target_vendor = "teaclave"))]
 pub fn build_enclave_objs() {
     let pkg_name = std::env::var("CARGO_PKG_NAME").unwrap();
     let cargo_sgx_output = match Env::cargo_sgx_output() {
@@ -209,7 +209,7 @@ pub fn build_enclave_objs() {
     }
 }
 
-#[cfg(feature = "builder")]
+#[cfg(not(target_vendor = "teaclave"))]
 fn snake_to_camel(snake: &str) -> String {
     let mut camel = String::new();
     let mut upper_next = true;
