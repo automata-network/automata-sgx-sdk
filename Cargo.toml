@@ -67,6 +67,7 @@ sgx_unwind = { git = "https://github.com/automata-network/incubator-teaclave-sgx
 
 sgx-dcap-ql-rs = { git = "https://github.com/automata-network/SGXDataCenterAttestationPrimitives.git", branch = "automata_sgx_builder", optional = true }
 toml = "0.8.19"
+ctor = "0.2"
 
 [target.'cfg(target_os = "linux")'.dependencies]
 sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }

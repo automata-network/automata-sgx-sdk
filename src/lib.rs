@@ -22,6 +22,8 @@ pub use builders::*;
 mod env;
 pub use env::*;
 
+pub use ctor::ctor;
+
 #[cfg(all(feature = "builder", feature = "tstd_app"))]
 pub fn build_app() {
     build_enclave_objs();
