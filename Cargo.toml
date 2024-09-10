@@ -46,7 +46,6 @@ sgx_unwind = ["dep:sgx_unwind"]
 cc = { version = "1.1.5" }
 serde = { version = "=1.0.197", features = ["derive"] }
 serde_json = "1"
-automata-sgx-builder-sysroot = { path = "sysroot" }
 automata-build-script = { path = "build-script", optional = true }
 
 #sgx_no_tstd = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
@@ -72,6 +71,7 @@ ctor = "0.2"
 
 
 [target.'cfg(not(target_vendor = "teaclave"))'.dependencies]
+automata-sgx-builder-sysroot = { path = "sysroot" }
 sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
 #sgx_trts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
 #sgx_tse = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
