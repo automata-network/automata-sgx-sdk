@@ -23,7 +23,7 @@ fn main() {
         .join(std::env::var("OUT_DIR").unwrap())
         .join("sysroot");
     println!(
-        "cargo:warning=building enclave std to {:?}, source={:?}",
+        "cargo:warning=building enclave sysroot to {:?}, source={:?}",
         sysroot.display(),
         sdk_path.display(),
     );
@@ -37,6 +37,8 @@ fn main() {
         "--release",
         "--features",
         "env,net,thread,untrusted_time,untrusted_fs,unsupported_process,capi,backtrace",
+        "--target-dir",
+        &format!("{}", sysroot.join("target")),
     ]);
     cmd.arg("--target");
     cmd.arg(format!("{}", target.display()));
