@@ -12,11 +12,11 @@ target = "x86_64-automata-linux-sgx"
 [features]
 default = ["sgx_types"]
 tstd_enclave = ["dcap", "sgx_trts", "sgx_types", "sgx_libc_pthread", "patch_rand", "patch_assert_fail"]
-tstd_app = ["dcap", "sgx_types"]
+tstd_app = ["dcap", "sgx_types", "sgx_urts"]
 builder = []
 sysroot = []
 dcap = ["dep:sgx-dcap-ql-rs"]
-app = ["sgx_urts"]
+app = []
 patch_rand = ["dummy_pthread_atfork"]
 patch_assert_fail = ["sgx_libc"]
 dummy_pthread_atfork = []
@@ -69,7 +69,7 @@ sgx-dcap-ql-rs = { git = "https://github.com/automata-network/SGXDataCenterAttes
 toml = "0.8.19"
 ctor = "0.2"
 
-[target.'cfg(target_os = "linux")'.dependencies]
+[target.'cfg(all(target_os = "linux"))'.dependencies]
 sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01", optional = true }
 
 [target.'cfg(not(target_vendor = "teaclave"))'.dependencies]
