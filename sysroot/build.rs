@@ -38,7 +38,7 @@ fn main() {
         "--features",
         "env,net,thread,untrusted_time,untrusted_fs,unsupported_process,capi,backtrace",
         "--target-dir",
-        &format!("{}", sysroot.join("target")),
+        &format!("{}", sysroot.join("target").display()),
     ]);
     cmd.arg("--target");
     cmd.arg(format!("{}", target.display()));
