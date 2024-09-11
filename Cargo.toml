@@ -6,7 +6,7 @@ authors = ["Automata Team"]
 homepage = "https://www.ata.network/"
 
 [package.metadata]
-rust-toolchain = "v2.0.0-nightly-2024-01-01"
+rust-toolchain = "nightly-2024-01-01"
 
 [features]
 default = ["sgx_types"]
