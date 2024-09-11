@@ -1,1 +1,1 @@
-# automata-sgx-builder
+# Automata SGX SDK

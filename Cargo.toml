@@ -1,5 +1,5 @@
 [package]
-name = "automata-sgx-builder"
+name = "automata-sgx-sdk"
 version = "0.1.0"
 edition = "2021"
 authors = ["Automata Team"]
@@ -71,7 +71,7 @@ ctor = "0.2"
 
 
 [target.'cfg(not(target_vendor = "teaclave"))'.dependencies]
-automata-sgx-builder-sysroot = { path = "sysroot" }
+automata-sgx-sdk-sysroot = { path = "sysroot" }
 sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
 #sgx_trts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
 #sgx_tse = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-02-01" }
