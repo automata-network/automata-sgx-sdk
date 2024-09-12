@@ -23,7 +23,7 @@ The workflow of building SGX APP in the [teaclave](https://github.com/apache/inc
 
 In Automata SGX SDK, we combine these steps on top of the cargo building system automatically, so you can get rid of the hassle of modifying the Makefile.
 
-### Dcap Remote Attestation
+### DCAP Remote Attestation
 
 As the most important feature of the SGX APP, we have built the DCAP attestation generation function based on [SGXDataCenterAttestationPrimitives](https://github.com/automata-network/SGXDataCenterAttestationPrimitives).   
 Users do not need to understand what's the ocalls during this process.
