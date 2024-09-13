@@ -11,8 +11,6 @@
 
 This repository contains the source code for the Automata SGX SDK, which is a software development kit for building secure enclaves on the Intel SGX platform. The SDK provides a set of APIs and tools to help developers build secure applications that run within an SGX enclave.
 
-The Automata SGX SDK is built on top of [https://github.com/automata-network/incubator-teaclave-sgx-sdk](https://github.com/automata-network/incubator-teaclave-sgx-sdk), which is a fork of [teaclave-sgx-sdk](https://github.com/apache/incubator-teaclave-sgx-sdk) and updated to work with the latest version of the Rust toolchain and Intel SGX SDK.
-
 ## Overview
 
 The Automata SGX SDK contains the following features which makes it easier for beginners to get started with building SGX applications:
@@ -144,3 +142,7 @@ let attestation = automata_sgx_sdk::dcap::dcap_quote(data);
 ```
 
 Refer to the [Automata DCAP Attestation](https://github.com/automata-network/automata-dcap-attestation) repo for more details about verification of the DCAP attestation.
+
+
+## Acknowledgements
+- [incubator-teaclave-sgx-sdk](https://github.com/apache/incubator-teaclave-sgx-sdk): The Automata SGX SDK is built on top of [https://github.com/automata-network/incubator-teaclave-sgx-sdk](https://github.com/automata-network/incubator-teaclave-sgx-sdk), which is a fork of `incubator-teaclave-sgx-sdk` and updated to work with the latest version of the Rust toolchain and Intel SGX SDK.
