@@ -44,7 +44,9 @@ Users do not need to understand what's the ocalls during this process.
 
 ## Getting Started
 
-To build your first enclave, please refer to the [sgx-scaffold](https://github.com/automata-network/sgx-scaffold/tree/main) project. It is a good starting point to get familiar with the SDK.
+To build your first enclave, please refer to the [sgx-scaffold](https://github.com/automata-network/sgx-scaffold/tree/main) project. It is a good starting point to get familiar with the SDK. 
+
+[SGX-Prover](https://github.com/automata-network/sgx-prover) is also a good reference for building production-ready enclaves using the Automata SGX SDK. It supports to execute scroll/linea blocks in SGX enclave and generate the PoE(Proof of Execution).
 
 ### Building applications
 Let's take the project structure below as an example. The `app` crate is the entrypoint and untrusted part of the application, while the `enclave` crate is the SGX enclave implementation, trusted part of the application.
