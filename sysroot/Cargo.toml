@@ -1,5 +1,5 @@
 [package]
-name = "automata-sgx-builder-sysroot"
+name = "automata-sgx-sdk-sysroot"
 version = "0.1.0"
 edition = "2021"
 

@@ -1,21 +1,22 @@
 [package]
-name = "automata-sgx-builder"
+name = "automata-sgx-sdk"
 version = "0.1.0"
 edition = "2021"
 authors = ["Automata Team"]
 homepage = "https://www.ata.network/"
 
 [package.metadata]
-rust-toolchain = "v2.0.0-nightly-2024-01-01"
+rust-toolchain = "nightly-2024-02-01"
+target = "x86_64-automata-linux-sgx"
 
 [features]
 default = ["sgx_types"]
 tstd_enclave = ["dcap", "sgx_trts", "sgx_types", "sgx_libc_pthread", "patch_rand", "patch_assert_fail"]
-tstd_app = ["dcap", "sgx_types"]
-builder = []
+tstd_app = ["dcap", "sgx_types", "sgx_urts", "app"]
+builder = ["dep:automata-build-script"]
 sysroot = []
 dcap = ["dep:sgx-dcap-ql-rs"]
-app = ["sgx_urts"]
+app = []
 patch_rand = ["dummy_pthread_atfork"]
 patch_assert_fail = ["sgx_libc"]
 dummy_pthread_atfork = []
@@ -45,38 +46,39 @@ sgx_unwind = ["dep:sgx_unwind"]
 cc = { version = "1.1.5" }
 serde = { version = "=1.0.197", features = ["derive"] }
 serde_json = "1"
-automata-sgx-builder-sysroot = { path = "sysroot" }
+automata-build-script = { path = "build-script", optional = true }
 
-#sgx_no_tstd = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01" }
-sgx_libc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-# sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_alloc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_crypto = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_dcap_ra_msg = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_dcap_tkey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_dcap_tvl = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_demangle = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_edl = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_ffi = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_ukey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_tkey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_ra_msg = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_rand = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
-sgx_unwind = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
+#sgx_no_tstd = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01" }
+sgx_libc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_alloc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_crypto = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_dcap_ra_msg = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_dcap_tkey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_dcap_tvl = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_demangle = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_edl = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_ffi = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_ukey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_tkey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_ra_msg = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_rand = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
+sgx_unwind = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01", optional = true }
 
 sgx-dcap-ql-rs = { git = "https://github.com/automata-network/SGXDataCenterAttestationPrimitives.git", branch = "automata_sgx_builder", optional = true }
-toml = "0.8.19"
 
-[target.'cfg(target_os = "linux")'.dependencies]
-sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01", optional = true }
+ctor = "0.2"
+
 
 [target.'cfg(not(target_vendor = "teaclave"))'.dependencies]
-sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01" }
-#sgx_trts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01" }
-#sgx_tse = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "v2.0.0-nightly-2024-01-01" }
+automata-sgx-sdk-sysroot = { path = "sysroot" }
+sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01" }
+#sgx_trts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01" }
+#sgx_tse = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.18_nightly_2024-02-01" }
 
 [workspace]
 resolver = "2"
 members = [
     "sysroot",
+    "build-script"
 ]

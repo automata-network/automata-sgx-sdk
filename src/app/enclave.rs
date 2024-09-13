@@ -56,6 +56,13 @@ macro_rules! enclave {
             )*
         }
 
+        const _: () = {
+            #[$crate::ctor]
+            fn fix_link() {
+                unsafe { $crate::sgxlib::sgx_types::function::sgx_ecall(0, 0, std::ptr::null(), std::ptr::null()) };
+            }
+        };
+
         impl $enclave_name {
             pub fn new(debug: bool) -> $crate::types::SgxResult<Self> {
                 let name = $crate::app::SgxEnclave::camel_to_snake(stringify!($enclave_name));

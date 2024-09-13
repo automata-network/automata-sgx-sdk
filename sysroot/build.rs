@@ -1,7 +1,12 @@
 include!("../build_dep.rs");
 
 fn main() {
-    let sgx_target = "x86_64-unknown-linux-sgx";
+    #[cfg(not(target_vendor = "teaclave"))]
+    build_sysroot();
+}
+
+fn build_sysroot() {
+    let sgx_target = "x86_64-automata-linux-sgx";
 
     let out_dir = PathBuf::new().join(std::env::var("OUT_DIR").unwrap());
     if out_dir.as_os_str().to_str().unwrap().contains(sgx_target) {
@@ -10,7 +15,8 @@ fn main() {
     let root_dir = PathBuf::new().join(std::env::var("CARGO_MANIFEST_DIR").unwrap());
     let root_path = root_dir.parent().unwrap();
 
-    let sdk_path = get_teaclave_sdk_path(root_path.join("Cargo.toml")).expect("unable to locate teaclave_sdk");
+    let sdk_path =
+        get_teaclave_sdk_path(root_path.join("Cargo.toml")).expect("unable to locate teaclave_sdk");
     let rust_target_path = sdk_path.join("rustlib");
     std::fs::write(
         out_dir.join("TEACLAVE_SGX_SDK_ROOT_DIR"),
@@ -23,7 +29,7 @@ fn main() {
         .join(std::env::var("OUT_DIR").unwrap())
         .join("sysroot");
     println!(
-        "cargo:warning=building enclave std to {:?}, source={:?}",
+        "cargo:warning=building enclave sysroot to {:?}, source={:?}",
         sysroot.display(),
         sdk_path.display(),
     );
@@ -37,13 +43,16 @@ fn main() {
         "--release",
         "--features",
         "env,net,thread,untrusted_time,untrusted_fs,unsupported_process,capi,backtrace",
+        "--target-dir",
+        &format!("{}", sysroot.join("target").display()),
     ]);
     cmd.arg("--target");
     cmd.arg(format!("{}", target.display()));
     assert!(cmd.status().unwrap().success());
 
-    let std_target_path = rust_target_path
-        .join("std")
+    let std_target_path = PathBuf::new()
+        .join(std::env::var("OUT_DIR").unwrap())
+        .join("sysroot")
         .join("target")
         .join(sgx_target)
         .join("release")

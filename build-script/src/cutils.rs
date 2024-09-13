@@ -21,3 +21,23 @@ impl Cutils {
         "-Wl,-z,relro,-z,now,-z,noexecstack -Wl,-Bstatic -Wl,-Bsymbolic -Wl,--no-undefined -Wl,-pie -Wl,--export-dynamic -Wl,--gc-sections".split(" ").collect()
     }
 }
+
+pub(crate) fn snake_to_camel(snake: &str) -> String {
+    let mut camel = String::new();
+    let mut upper_next = true;
+
+    for c in snake.chars() {
+        if c == '_' {
+            upper_next = true;
+        } else {
+            if upper_next {
+                camel.push(c.to_ascii_uppercase());
+                upper_next = false;
+            } else {
+                camel.push(c);
+            }
+        }
+    }
+
+    camel
+}
