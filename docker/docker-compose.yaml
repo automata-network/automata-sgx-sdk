@@ -1,0 +1,10 @@
+services:
+  ubuntu-20.04-image:
+    image: ghcr.io/automata-network/automata-sgx-sdk:v0.1_ubuntu-20.04
+    build:
+      dockerfile: ./ubuntu-20.04.Dockerfile
+
+  ubuntu-22.04-image:
+    image: ghcr.io/automata-network/automata-sgx-sdk:v0.1_ubuntu-22.04
+    build:
+      dockerfile: ./ubuntu-22.04.Dockerfile
