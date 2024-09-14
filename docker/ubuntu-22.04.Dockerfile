@@ -1,7 +1,8 @@
 FROM ubuntu:22.04 as builder
 
 LABEL automata.rust_toolchain="nightly-2024-02-01"
-LABEL automata.intel_sgx_sdk="2.18.101.1"
+LABEL automata.intel_sgx_sdk="2.24.100.3"
+LABEL org.opencontainers.image.description="Automata SGX SDK Base Image for Ubuntu 22.04"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -23,13 +24,13 @@ RUN cd /root && \
     echo 'source /root/.cargo/env' >> /root/.bashrc && \
     rm /root/rustup-init && rm -rf /root/.cargo/registry && rm -rf /root/.cargo/git
 
-ENV VERSION                 2.18.101.1-jammy1
-ENV DCAP_VERSION            1.15.100.3-jammy1
-ENV SDK_URL="https://download.01.org/intel-sgx/sgx-linux/2.18.1/distro/ubuntu20.04-server/sgx_linux_x64_sdk_2.18.101.1.bin"
-ENV LOCAL_REPO="https://download.01.org/intel-sgx/sgx-linux/2.18.1/distro/ubuntu22.04-server/sgx_debian_local_repo.tgz"
+ENV VERSION                 2.24.100.3-jammy1
+ENV DCAP_VERSION            1.21.100.3-jammy1
+ENV SDK_URL="https://download.01.org/intel-sgx/sgx-linux/2.24/distro/ubuntu22.04-server/sgx_linux_x64_sdk_2.24.100.3.bin"
+ENV LOCAL_REPO="https://download.01.org/intel-sgx/sgx-linux/2.24/distro/ubuntu22.04-server/sgx_debian_local_repo.tgz"
 
 RUN cd /root && \
-    wget https://download.01.org/intel-sgx/sgx-linux/2.18.1/as.ld.objdump.r4.tar.gz && \
+    wget https://download.01.org/intel-sgx/sgx-linux/2.24/as.ld.objdump.r4.tar.gz && \
     tar xzf as.ld.objdump.r4.tar.gz && \
     cp -r external/toolset/ubuntu20.04/* /usr/bin/ && \
     rm -rf ./external ./as.ld.objdump.r4.tar.gz
