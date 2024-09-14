@@ -8,6 +8,7 @@ homepage = "https://www.ata.network/"
 [package.metadata]
 rust-toolchain = "nightly-2024-02-01"
 target = "x86_64-automata-linux-sgx"
+intel-sgx-sdk = "2.24.100"
 
 [features]
 default = ["sgx_types"]
