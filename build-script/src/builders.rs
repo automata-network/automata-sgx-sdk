@@ -97,8 +97,7 @@ impl TrustedProxyBuilder {
         let mut cmd = build.get_compiler().to_command();
         cmd.args(["-c", &format!("{}", source.display())]);
         cmd.args(["-o", &format!("{}", output.display())]);
-        assert!(cmd.status().unwrap().success());
-        // self.mode.trace_file(source);
+        run_cmd(cmd);
     }
 }
 
@@ -147,8 +146,7 @@ impl EnclaveSharedObjectBuilder {
             "-Wl,--end-group",
         ]);
 
-        println!("cmd: {:?}", cmd);
-        assert!(cmd.status().unwrap().success());
+        run_cmd(cmd)
     }
 }
 
@@ -217,8 +215,7 @@ impl Edger8r {
             cmd.args(["--search-path", s.to_str().unwrap()]);
         }
 
-        let succ = cmd.status().unwrap().success();
-        assert!(succ);
+        run_cmd(cmd);
 
         let name = edl.file_stem().unwrap();
         dir.join(format!(
@@ -297,8 +294,7 @@ impl SgxSigner {
         cmd.args(["-out", &format!("{}", out.display())]);
         cmd.args(["-enclave", &format!("{}", enclave.display())]);
         cmd.args(["-key", &format!("{}", pem.display())]);
-        // println!("cargo:warning=signer {:?}", cmd);
-        assert!(cmd.status().unwrap().success());
+        run_cmd(cmd);
     }
 }
 
@@ -358,5 +354,18 @@ impl EdlBuilder {
 fn apply_flags(b: &mut cc::Build, flags: &[&'static str]) {
     for flag in flags {
         b.flag_if_supported(flag);
+    }
+}
+
+fn run_cmd(mut cmd: Command) {
+    match cmd.status() {
+        Ok(status) => {
+            if !status.success() {
+                panic!("exec {:?} failed: {:?}", cmd, status);
+            }
+        }
+        Err(err) => {
+            panic!("exec {:?} failed: {:?}", cmd, err);
+        }
     }
 }
