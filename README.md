@@ -38,9 +38,8 @@ Users do not need to understand what's the ocalls during this process.
 
 | Operator System  | Intel SGX SDK | Rust Toolchain     | Status |
 |----------------- | ------------- | ------------------ | ------ |
-| Ubuntu 20.04 LTS | 2.17.1        | nightly-2024-02-01 | ✅     |
-| Ubuntu 20.04 LTS | 2.18.1        | nightly-2024-02-01 | ✅     |
-| Ubuntu 22.04 LTS | 2.18.1        | nightly-2024-02-01 | ✅     |
+| Ubuntu 20.04 LTS | 2.24          | nightly-2024-02-01 | ✅     |
+| Ubuntu 22.04 LTS | 2.24          | nightly-2024-02-01 | ✅     |
 
 ## Getting Started
 
