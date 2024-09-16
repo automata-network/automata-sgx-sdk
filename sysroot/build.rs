@@ -12,11 +12,10 @@ fn build_sysroot() {
     if out_dir.as_os_str().to_str().unwrap().contains(sgx_target) {
         return;
     }
-    let root_dir = PathBuf::new().join(std::env::var("CARGO_MANIFEST_DIR").unwrap());
-    let root_path = root_dir.parent().unwrap();
 
-    let sdk_path =
-        get_teaclave_sdk_path(root_path.join("Cargo.toml")).expect("unable to locate teaclave_sdk");
+    println!("cargo:rerun-if-env-changed=SGX_MODE");
+
+    let sdk_path = get_teaclave_sdk_path().expect("unable to locate teaclave_sdk");
     let rust_target_path = sdk_path.join("rustlib");
     std::fs::write(
         out_dir.join("TEACLAVE_SGX_SDK_ROOT_DIR"),

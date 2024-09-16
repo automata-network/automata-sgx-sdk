@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
-pub fn get_teaclave_sdk_path(manifest_path: PathBuf) -> Option<PathBuf> {
+pub fn get_teaclave_sdk_path() -> Option<PathBuf> {
     println!("cargo:rerun-if-env-changed=TEACLAVE_SGX_SDK");
     if let Ok(n) = std::env::var("TEACLAVE_SGX_SDK") {
         return Some(PathBuf::new().join(n));

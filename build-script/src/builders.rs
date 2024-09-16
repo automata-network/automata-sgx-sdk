@@ -17,7 +17,9 @@ pub enum BuildMode {
 impl BuildMode {
     pub fn apply_build(&self, b: &mut Build) {
         match self {
-            BuildMode::BuildScript => {}
+            BuildMode::BuildScript => {
+                b.opt_level(2);
+            }
             BuildMode::Shell => {
                 b.target("test")
                     .host("test")

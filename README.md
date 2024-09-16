@@ -45,8 +45,6 @@ Users do not need to understand what's the ocalls during this process.
 
 To build your first enclave, please refer to the [sgx-scaffold](https://github.com/automata-network/sgx-scaffold/tree/main) project. It is a good starting point to get familiar with the SDK. 
 
-[SGX-Prover](https://github.com/automata-network/sgx-prover) is also a good reference for building production-ready enclaves using the Automata SGX SDK. It supports to execute scroll/linea blocks in SGX enclave and generate the PoE(Proof of Execution).
-
 ### Building applications
 Let's take the project structure below as an example. The `app` crate is the entrypoint and untrusted part of the application, while the `enclave` crate is the SGX enclave implementation, trusted part of the application.
 <pre>
@@ -144,6 +142,10 @@ let attestation = automata_sgx_sdk::dcap::dcap_quote(data);
 
 Refer to the [Automata DCAP Attestation](https://github.com/automata-network/automata-dcap-attestation) repo for more details about verification of the DCAP attestation.
 
+## Projects using Automata SGX SDK
+
+* [sgx-prover](https://github.com/automata-network/sgx-prover): A prover that supports to execute Scroll and Linea blocks in SGX enclave and generate the PoE (Proof of Execution).
+* [sgx-scallfold](https://github.com/automata-network/sgx-scaffold): A scaffold for creating an SGX enclave with Rust.
 
 ## Acknowledgements
 - [incubator-teaclave-sgx-sdk](https://github.com/apache/incubator-teaclave-sgx-sdk): The Automata SGX SDK is built on top of [https://github.com/automata-network/incubator-teaclave-sgx-sdk](https://github.com/automata-network/incubator-teaclave-sgx-sdk), which is a fork of `incubator-teaclave-sgx-sdk` and updated to work with the latest version of the Rust toolchain and Intel SGX SDK.
