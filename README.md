@@ -78,11 +78,11 @@ Follow the steps below to use Automata SGX SDK:
     echo 'nightly-2024-02-01' > rust-toolchain
     ```
 
-2. Update the `Cargo.toml` of the workspace to include the following dependencies, here we choose the `nightly-2024-02-01` branch.
+2. Update the `Cargo.toml` of the workspace to include the following dependencies, here we choose the `main` branch.
     ```toml
     [workspace.dependencies]
-    automata-sgx-sdk = { git = "https://github.com/automata-network/automata-sgx-sdk", branch = "nightly-2024-02-01" }
-    automata-build-script = { git = "https://github.com/automata-network/automata-sgx-sdk", branch = "nightly-2024-02-01" }
+    automata-sgx-sdk = { git = "https://github.com/automata-network/automata-sgx-sdk", branch = "main" }
+    automata-build-script = { git = "https://github.com/automata-network/automata-sgx-sdk", branch = "main" }
     ```
 
 3. Update the `app/Cargo.toml` file as follows. 
