@@ -156,7 +156,7 @@ Refer to the [Automata DCAP Attestation](https://github.com/automata-network/aut
 ## Projects using Automata SGX SDK
 
 * [sgx-prover](https://github.com/automata-network/sgx-prover): A prover that supports to execute Scroll and Linea blocks in SGX enclave and generate the PoE (Proof of Execution).
-* [sgx-scallfold](https://github.com/automata-network/sgx-scaffold): A scaffold for creating an SGX enclave with Rust.
+* [sgx-scaffold](https://github.com/automata-network/sgx-scaffold): A scaffold for creating an SGX enclave with Rust.
 * [sgx-revm](https://github.com/automata-network/revm-sgx): A PoC that embeded revm inside Intel SGX enclave.
 
 ## Acknowledgements
