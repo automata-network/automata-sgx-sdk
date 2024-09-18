@@ -17,12 +17,12 @@ macro_rules! enclave {
         }
 
         impl $enclave_name {
-            pub fn new(_debug: bool) -> $crate::types::SgxResult<Self> {
-                Ok($enclave_name())
+            pub fn new() -> Self {
+                $enclave_name()
             }
 
             $(
-                pub fn $fn_name(&self, $($arg_name: $arg_type),*) -> $crate::types::SgxResult<$($ret_type)?> {
+                pub fn $fn_name(&self, $($arg_name: $arg_type),*) -> $crate::app::AppResult<$($ret_type)?> {
                     eprintln!("{}", "=".repeat(80));
                     eprintln!("WARNING: Currently running in untrusted mode, for development use only");
                     eprintln!("{}", "=".repeat(80));
@@ -31,7 +31,7 @@ macro_rules! enclave {
                         $fn_name($($arg_name,)* &mut retval)
                     };
                     if retval != $crate::types::SgxStatus::Success {
-                        return Err(retval);
+                        return Err(retval.into());
                     }
                     Ok(ret)
                 }

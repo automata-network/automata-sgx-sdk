@@ -1,19 +1,23 @@
 use std::path::PathBuf;
+use std::sync::Mutex;
 
 use crate::sgxlib::{sgx_types, sgx_urts};
 
-pub use sgx_types::error::SgxResult;
+pub use sgx_types::error::SgxStatus;
 
 pub struct SgxEnclave {
-    enclave: sgx_urts::enclave::SgxEnclave,
+    pub debug: bool,
+    name: String,
+    enclave: Mutex<Option<Result<sgx_urts::enclave::SgxEnclave, super::AppError>>>,
 }
 
 impl SgxEnclave {
-    pub fn new(name: &str, debug: bool) -> SgxResult<Self> {
-        let args = std::env::args().collect::<Vec<_>>();
-        let enclave_path = PathBuf::new().join(&args[0]).parent().unwrap().join(name);
-        let enclave = sgx_urts::enclave::SgxEnclave::create(enclave_path, debug)?;
-        Ok(Self { enclave })
+    pub fn new(name: &str) -> Self {
+        Self {
+            name: name.to_string(),
+            debug: std::env::var("SGX_DEBUG").unwrap_or_default() != "".to_string(),
+            enclave: Mutex::new(None),
+        }
     }
 
     pub fn camel_to_snake(s: &str) -> String {
@@ -33,8 +37,25 @@ impl SgxEnclave {
         snake_case
     }
 
-    pub fn eid(&self) -> u64 {
-        self.enclave.eid()
+    pub fn eid(&self) -> Result<u64, super::AppError> {
+        let mut enclave = self.enclave.lock().unwrap();
+        match enclave.as_ref() {
+            None => {
+                let args = std::env::args().collect::<Vec<_>>();
+                let enclave_path = PathBuf::new().join(&args[0]).parent().unwrap().join(&self.name);
+                let result = sgx_urts::enclave::SgxEnclave::create(&enclave_path, self.debug)
+                    .map_err(super::AppError::CreateEnclave(&enclave_path));
+                *enclave = Some(result);
+                match enclave.as_ref().unwrap() {
+                    Ok(result) => Ok(result.eid()),
+                    Err(err) => Err(err.clone()),                    
+                }
+            }
+            Some(enclave) => match enclave {
+                Ok(result) => Ok(result.eid()),
+                Err(err) => Err(err.clone()),
+            },
+        }
     }
 }
 
@@ -57,23 +78,25 @@ macro_rules! enclave {
         }
 
         impl $enclave_name {
-            pub fn new(debug: bool) -> $crate::types::SgxResult<Self> {
+            pub fn new() -> Self {
                 let name = $crate::app::SgxEnclave::camel_to_snake(stringify!($enclave_name));
                 env!(concat!("ENCLAVE_", stringify!($enclave_name)), concat!("the enclave ", stringify!($enclave_name) ," is not defined in Cargo.toml"));
 
                 let name = format!("lib{}.signed.so", name);
-                let enclave = $crate::app::SgxEnclave::new(&name, debug)?;
-                Ok(Self(enclave))
+                let enclave = $crate::app::SgxEnclave::new(&name);
+                Self(enclave)
             }
 
             $(
-                pub fn $fn_name(&self, $($arg_name: $arg_type),*) -> $crate::types::SgxResult<$($ret_type)?> {
+                pub fn $fn_name(&self, $($arg_name: $arg_type),*) -> $crate::app::AppResult<$($ret_type)?> {
+                    use $crate::app::AppError;
+                    let eid = self.0.eid().map_err(AppError::OnEcall(&stringify!($fn_name)))?;
                     let mut retval = $crate::types::SgxStatus::Success;
                     let ret = unsafe {
-                        $fn_name(self.0.eid(), $($arg_name,)* &mut retval)
+                        $fn_name(eid, $($arg_name,)* &mut retval)
                     };
                     if retval != $crate::types::SgxStatus::Success {
-                        return Err(retval);
+                        return Err(retval).map_err(AppError::OnEcall(&stringify!($fn_name)));
                     }
                     Ok(ret)
                 }

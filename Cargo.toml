@@ -11,7 +11,7 @@ target = "x86_64-automata-linux-sgx"
 intel-sgx-sdk = "2.24.100"
 
 [features]
-default = ["sgx_types"]
+default = ["sgx_types", "dcap"]
 tstd_enclave = ["dcap", "sgx_trts", "sgx_types", "sgx_libc_pthread", "patch_rand", "patch_assert_fail"]
 tstd_app = ["dcap", "sgx_types", "sgx_urts", "app"]
 builder = ["dep:automata-build-script"]
@@ -41,6 +41,7 @@ serde = { version = "=1.0.197", features = ["derive"] }
 serde_json = "1"
 ctor = "0.2"
 automata-build-script = { path = "build-script", optional = true }
+base = { git = "https://github.com/automata-network/base-rs" }
 
 sgx_libc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.24_nightly_2024-02-01", optional = true }
 sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", branch = "2.24_nightly_2024-02-01", optional = true }
