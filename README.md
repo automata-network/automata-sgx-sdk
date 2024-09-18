@@ -11,8 +11,19 @@
 
 This repository contains the source code for the Automata SGX SDK, which is a software development kit for building secure enclaves on the Intel SGX platform. The SDK provides a set of APIs and tools to help developers build secure applications that run within an SGX enclave.
 
-## Overview
+|                         | Type         | Build System     | DCAP attestation       | Rust toolchain     | Intel SGX SDK |
+| ----------------------- | ------------ | ---------------- | ---------------------- | ------------------ | ------------- |
+| Automata SGX SDK        | Rust SGX SDK | Cargo            | High-level abstraction | nightly-2024-02-01 | 2.24          |
+| Apache Teaclave SGX SDK | Rust SGX SDK | Makefile & Cargo | Low-level abstraction  | nightly-2023-11-17 | 2.17          |
+| Gramine                 | LibOS        | Makefile         | High-level abstraction | -                  | -             |
 
+Compared to Gramine, the Automata SGX SDK provides developers with greater flexibility to design custom enclave interfaces and selectively place critical components inside the enclave. This capability enables more precise memory management and offers opportunities for performance optimization. With the help of Rust, developers can build robust, high-performance SGX applications that benefit from Rust’s strong safety guarantees and efficient memory management.
+
+In contrast to the Apache Teaclave SGX SDK, the Automata SGX SDK simplifies the development process by removing the need for manual maintenance of Makefiles. All builds are managed through Cargo, Rust’s package manager and build system. Additionally, it supports newer versions of both the Intel SGX SDK and the Rust toolchain.
+
+
+## Overview
+ 
 The Automata SGX SDK contains the following features which makes it easier for beginners to get started with building SGX applications:
 
 - **Build System**: The SDK provides a build system for building SGX applications with Rust, on top of the build system, we provide the [cargo-sgx](https://crates.io/crates/cargo-sgx) tool which greatly simplifies the process of building SGX applications.
@@ -37,9 +48,9 @@ Users do not need to understand what's the ocalls during this process.
 ## Supported Environment
 
 | Operator System  | Intel SGX SDK | Rust Toolchain     | Status |
-|----------------- | ------------- | ------------------ | ------ |
-| Ubuntu 20.04 LTS | 2.24          | nightly-2024-02-01 | ✅     |
-| Ubuntu 22.04 LTS | 2.24          | nightly-2024-02-01 | ✅     |
+| ---------------- | ------------- | ------------------ | ------ |
+| Ubuntu 20.04 LTS | 2.24          | nightly-2024-02-01 | ✅      |
+| Ubuntu 22.04 LTS | 2.24          | nightly-2024-02-01 | ✅      |
 
 ## Getting Started
 
@@ -146,6 +157,10 @@ Refer to the [Automata DCAP Attestation](https://github.com/automata-network/aut
 
 * [sgx-prover](https://github.com/automata-network/sgx-prover): A prover that supports to execute Scroll and Linea blocks in SGX enclave and generate the PoE (Proof of Execution).
 * [sgx-scallfold](https://github.com/automata-network/sgx-scaffold): A scaffold for creating an SGX enclave with Rust.
+* [sgx-revm](https://github.com/automata-network/revm-sgx): A PoC that embeded revm inside Intel SGX enclave.
 
 ## Acknowledgements
 - [incubator-teaclave-sgx-sdk](https://github.com/apache/incubator-teaclave-sgx-sdk): The Automata SGX SDK is built on top of [https://github.com/automata-network/incubator-teaclave-sgx-sdk](https://github.com/automata-network/incubator-teaclave-sgx-sdk), which is a fork of `incubator-teaclave-sgx-sdk` and updated to work with the latest version of the Rust toolchain and Intel SGX SDK.
+
+## Disclaimer
+This project is under development. All source code and features are not production ready.
