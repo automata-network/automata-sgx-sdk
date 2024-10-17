@@ -11,7 +11,7 @@ target = "x86_64-automata-linux-sgx"
 intel-sgx-sdk = "2.24.100"
 
 [features]
-default = ["sgx_types", "dcap"]
+default = ["sgx_types"]
 tstd_enclave = ["dcap", "sgx_trts", "sgx_types", "sgx_libc_pthread", "patch_rand", "patch_assert_fail"]
 tstd_app = ["dcap", "sgx_types", "sgx_urts", "app"]
 builder = ["dep:automata-build-script"]
