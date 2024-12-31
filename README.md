@@ -43,11 +43,11 @@ In Automata SGX SDK, we combine these steps on top of the cargo building system 
 ### DCAP Remote Attestation
 
 As the most important feature of the SGX APP, we have built the DCAP attestation generation function based on [SGXDataCenterAttestationPrimitives](https://github.com/automata-network/SGXDataCenterAttestationPrimitives).   
-Users do not need to understand what's the ocalls during this process.
+Users do not need to understand what's the OCalls during this process.
 
 ## Supported Environment
 
-| Operator System  | Intel SGX SDK | Rust Toolchain     | Status |
+| Operating System  | Intel SGX SDK | Rust Toolchain     | Status |
 | ---------------- | ------------- | ------------------ | ------ |
 | Ubuntu 20.04 LTS | 2.24          | nightly-2024-02-01 | ✅      |
 | Ubuntu 22.04 LTS | 2.24          | nightly-2024-02-01 | ✅      |
@@ -87,7 +87,7 @@ Follow the steps below to use Automata SGX SDK:
 
 3. Update the `app/Cargo.toml` file as follows. 
     
-    Explanation for the avaibale options of `package.metadata.sgx`:
+    Explanation for the available options of `package.metadata.sgx`:
     - `path`: (required) Path to the enclave crate.
     - `config`: (required) Path to the enclave configuration file.
     - `edl`: (required) Path to the enclave EDL file.
