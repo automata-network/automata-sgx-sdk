@@ -40,7 +40,7 @@ pub fn build_std_app() {
             );
             // println!("cargo:rerun-if-env-changed=CARGO_BUILD");
             // if std::env::var("CARGO_BUILD") != Ok("1".to_owned()) {
-            //     let note = ["set CARGO_BUILD=1 to enable compatibility mode.", "or you can add automata_sgx_builder::enalbe_compatibility_mode(); to the build script."];
+            //     let note = ["set CARGO_BUILD=1 to enable compatibility mode.", "or you can add automata_sgx_builder::enable_compatibility_mode(); to the build script."];
             //     println!("cargo:warning=NOTICE:\n\nset CARGO_BUILD=1 to enable compatibility mode. \n\n\n", "=".repeat(80));
             // }
             println!("cargo:rerun-if-changed=compatibility mode");

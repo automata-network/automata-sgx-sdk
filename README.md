@@ -87,7 +87,7 @@ Follow the steps below to use Automata SGX SDK:
 
 3. Update the `app/Cargo.toml` file as follows. 
     
-    Explanation for the avaibale options of `package.metadata.sgx`:
+    Explanation for the available options of `package.metadata.sgx`:
     - `path`: (required) Path to the enclave crate.
     - `config`: (required) Path to the enclave configuration file.
     - `edl`: (required) Path to the enclave EDL file.
