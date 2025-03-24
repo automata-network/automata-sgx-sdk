@@ -73,7 +73,7 @@ macro_rules! enclave {
 
         extern "C" {
             $(
-            fn $fn_name(eid: $crate::types::EnclaveId, $($arg_name: $arg_type,)* retval: *mut $crate::types::SgxStatus)  $(-> $ret_type)?;
+            fn $fn_name(eid: $crate::types::EnclaveId, retval: *mut $crate::types::SgxStatus, $($arg_name: $arg_type,)*)  $(-> $ret_type)?;
             )*
         }
 
@@ -93,7 +93,7 @@ macro_rules! enclave {
                     let eid = self.0.eid().map_err(AppError::OnEcall(&stringify!($fn_name)))?;
                     let mut retval = $crate::types::SgxStatus::Success;
                     let ret = unsafe {
-                        $fn_name(eid, $($arg_name,)* &mut retval)
+                        $fn_name(eid, &mut retval, $($arg_name,)*)
                     };
                     if retval != $crate::types::SgxStatus::Success {
                         return Err(retval).map_err(AppError::OnEcall(&stringify!($fn_name)));
