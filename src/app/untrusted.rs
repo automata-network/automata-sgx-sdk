@@ -12,7 +12,7 @@ macro_rules! enclave {
 
         extern "C" {
             $(
-            fn $fn_name($($arg_name: $arg_type,)* retval: *mut $crate::types::SgxStatus)  $(-> $ret_type)?;
+            fn $fn_name(retval: *mut $crate::types::SgxStatus, $($arg_name: $arg_type,)*)  $(-> $ret_type)?;
             )*
         }
 
@@ -28,7 +28,7 @@ macro_rules! enclave {
                     eprintln!("{}", "=".repeat(80));
                     let mut retval = $crate::types::SgxStatus::Success;
                     let ret = unsafe {
-                        $fn_name($($arg_name,)* &mut retval)
+                        $fn_name(&mut retval, $($arg_name,)*)
                     };
                     if retval != $crate::types::SgxStatus::Success {
                         return Err(retval.into());
